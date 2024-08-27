@@ -42,6 +42,11 @@ jobs:
         working-directory: x6100/AetherX6100Buildroot
         name: Compile buildroot
         run: bash ./br_build.sh
+      - name: 'Upload buildroot image'
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildroot-image
+          path: x6100/AetherX6100Buildroot/build/images/sdcard.img
       - working-directory: x6100/x6100_gui
         name: Compile GUI
         run: |
@@ -49,13 +54,11 @@ jobs:
           git submodule update
           cd buildroot
           ./build.sh
-      - name: Verify file list
-        working-directory: x6100/x6100_gui
-        run: ls -lah buildroot/build
-      # - name: Archive buildroot artifact files
-      #   run: tar -czf buildroot.tar.gz x6100/AetherX6100Buildroot/build
-      # - name: 'Upload Artifact'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: buildroot
-      #     path: buildroot.tar.gz
+      - name: Archive GUI artifact files
+        run: tar -czf gui.tar.gz x6100/x6100_gui/buildroot/build
+      - name: 'Upload GUI archive'
+        uses: actions/upload-artifact@v4
+        with:
+          name: gui-archive
+          path: gui.tar.gz
+
