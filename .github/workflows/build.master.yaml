@@ -5,13 +5,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # - name: Prepare directory structure
-      #   run: mkdir x6100
-      # - name: Checkout Buildroot
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: gdyuldin/AetherX6100Buildroot
-      #     path: x6100/AetherX6100Buildroot
+      - name: Prepare directory structure
+        run: mkdir x6100
+      - name: Checkout Buildroot
+        uses: actions/checkout@v4
+        with:
+          repository: gdyuldin/AetherX6100Buildroot
+          path: x6100/AetherX6100Buildroot
       # - name: Checkout GUI
       #   uses: actions/checkout@v4
       #   with:
@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: buildroot-cache
-          path: build
+          path: x6100/AetherX6100Buildroot/build
       # - name: Verify struct
       #   run: ls -lah x6100
       # - name: Install required packages
@@ -37,8 +37,8 @@ jobs:
       - if: ${{ steps.cache-buildroot.outputs.cache-hit != 'true' }}
         name: Compile buildroot
         run: |
-          mkdir build
-          touch build/some-file-here
+          mkdir x6100/AetherX6100Buildroot/build
+          touch x6100/AetherX6100Buildroot/build/some-file-here
       # - name: Verify struct
       #   run: find x6100/AetherX6100Buildroot -maxdepth 2 -print
       - name: Archive buildroot artifact files
