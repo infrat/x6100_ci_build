@@ -5,26 +5,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare directory structure
-        run: mkdir x6100
-      - name: Checkout Buildroot
-        uses: actions/checkout@v4
-        with:
-          repository: gdyuldin/AetherX6100Buildroot
-          path: x6100/AetherX6100Buildroot
-      - name: Checkout GUI
-        uses: actions/checkout@v4
-        with:
-          repository: gdyuldin/x6100_gui
-          path: x6100/x6100_gui
+      # - name: Prepare directory structure
+      #   run: mkdir x6100
+      # - name: Checkout Buildroot
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: gdyuldin/AetherX6100Buildroot
+      #     path: x6100/AetherX6100Buildroot
+      # - name: Checkout GUI
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: gdyuldin/x6100_gui
+      #     path: x6100/x6100_gui
       - name: Cache Buildroot build directory
         id: cache-buildroot
         uses: actions/cache@v3
         with:
           key: buildroot-cache
-          path: x6100/AetherX6100Buildroot/build
-      - name: Verify struct
-        run: ls -lah x6100
+          path: build
+      # - name: Verify struct
+      #   run: ls -lah x6100
       # - name: Install required packages
       #   env:
       #     LANG: en_US.UTF-8
@@ -37,13 +37,12 @@ jobs:
       - if: ${{ steps.cache-buildroot.outputs.cache-hit != 'true' }}
         name: Compile buildroot
         run: |
-          cd x6100/AetherX6100Buildroot
           mkdir build
           touch build/some-file-here
-      - name: Verify struct
-        run: find x6100/AetherX6100Buildroot -maxdepth 2 -print
+      # - name: Verify struct
+      #   run: find x6100/AetherX6100Buildroot -maxdepth 2 -print
       - name: Archive buildroot artifact files
-        run: tar -zxf buildroot.tar.gz -C x6100/AetherX6100Buildroot/build
+        run: tar -czf buildroot.tar.gz build
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
