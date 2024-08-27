@@ -1,6 +1,10 @@
 name: Build on Ubuntu
 on: push
 
+env:
+  BUILDROOT_REPO: x6100/AetherX6100Buildroot
+  GUI_REPO: x6100/x6100_gui
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,18 +15,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: gdyuldin/AetherX6100Buildroot
-          path: x6100/AetherX6100Buildroot
+          path: ${{ vars.BUILDROOT_REPO }}
       - name: Checkout GUI
         uses: actions/checkout@v4
         with:
           repository: gdyuldin/x6100_gui
-          path: x6100/x6100_gui
+          path: ${{ vars.GUI_REPO }}
       - name: Cache Buildroot build directory
         id: cache-buildroot
         uses: actions/cache@v3
         with:
           key: buildroot-cache
-          path: x6100/AetherX6100Buildroot/build
+          path: ${{ vars.BUILDROOT_REPO }}/build
       # - name: Verify struct
       #   run: ls -lah x6100
       # - name: Install required packages
@@ -37,12 +41,12 @@ jobs:
       - if: ${{ steps.cache-buildroot.outputs.cache-hit != 'true' }}
         name: Compile buildroot
         run: |
-          mkdir x6100/AetherX6100Buildroot/build
-          touch x6100/AetherX6100Buildroot/build/some-file-here
+          mkdir $BUILDROOT_REPO/build
+          touch $BUILDROOT_REPO/build/some-file-here
       # - name: Verify struct
       #   run: find x6100/AetherX6100Buildroot -maxdepth 2 -print
       - name: Archive buildroot artifact files
-        run: tar -czf buildroot.tar.gz x6100/AetherX6100Buildroot/build
+        run: tar -czf buildroot.tar.gz ${{ vars.BUILDROOT_REPO }}/build
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
