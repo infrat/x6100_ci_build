@@ -6,8 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Prepare directory structure
-        run: |
-          mkdir x6100
+        run: mkdir x6100
       - name: Checkout Buildroot
         uses: actions/checkout@v4
         with:
@@ -18,3 +17,5 @@ jobs:
         with:
           repository: gdyuldin/x6100_gui
           path: x6100/x6100_gui
+      - name: Verify struct
+        run: ls -lah x6100
