@@ -33,6 +33,7 @@ jobs:
         env:
           LANG: en_US.UTF-8
         run: |
+        
           sudo apt-get update 
           sudo apt-get upgrade -y
           sudo apt-get install -y locales
