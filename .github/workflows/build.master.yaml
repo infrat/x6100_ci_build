@@ -55,7 +55,7 @@ jobs:
           cd buildroot
           ./build.sh
       - name: Archive GUI artifact files
-        run: tar -czf gui.tar.gz x6100/x6100_gui/buildroot/build
+        run: tar -czf gui.tar.gz x6100/x6100_gui
       - name: 'Upload GUI archive'
         uses: actions/upload-artifact@v4
         with:
