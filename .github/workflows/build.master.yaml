@@ -11,18 +11,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: gdyuldin/AetherX6100Buildroot
-          path: ~/x6100/AetherX6100Buildroot
+          path: x6100/AetherX6100Buildroot
       - name: Checkout GUI
         uses: actions/checkout@v4
         with:
           repository: gdyuldin/x6100_gui
-          path: ~/x6100/x6100_gui
+          path: x6100/x6100_gui
       - name: Cache Buildroot build directory
         id: cache-buildroot
         uses: actions/cache@v3
         with:
           key: buildroot-cache
-          path: ~/x6100/AetherX6100Buildroot/build
+          path: x6100/AetherX6100Buildroot/build
       - name: Install required packages
         env:
           LANG: en_US.UTF-8
@@ -35,10 +35,10 @@ jobs:
       - if: ${{ steps.cache-buildroot.outputs.cache-hit != 'true' }}
         name: Compile buildroot
         run: |
-          cd ~/x6100/AetherX6100Buildroot
+          cd x6100/AetherX6100Buildroot
           bash ./br_build.sh
       - name: Archive buildroot artifact files
-        run: tar -zxf buildroot.tar.gz -C ~/x6100/AetherX6100Buildroot/build
+        run: tar -zxf buildroot.tar.gz -C x6100/AetherX6100Buildroot/build
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
