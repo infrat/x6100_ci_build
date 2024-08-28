@@ -33,7 +33,7 @@ jobs:
         env:
           LANG: en_US.UTF-8
         run: |
-        
+
           sudo apt-get update 
           sudo apt-get upgrade -y
           sudo apt-get install -y locales
@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: buildroot-image
-          path: x6100/AetherX6100Buildroot/build/images/sdcard.img
+          path: x6100/AetherX6100Buildroot/build
       - working-directory: x6100/x6100_gui
         name: Compile GUI
         run: |
