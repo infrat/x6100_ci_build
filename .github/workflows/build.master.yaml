@@ -43,11 +43,13 @@ jobs:
         working-directory: x6100/AetherX6100Buildroot
         name: Compile buildroot
         run: bash ./br_build.sh
-      - name: 'Upload buildroot image'
+      - name: Archive Buildroot artifact files
+        run: tar -czf buildroot.tar.gz x6100/AetherX6100Buildroot/build
+      - name: 'Upload Buildroot image'
         uses: actions/upload-artifact@v4
         with:
           name: buildroot-image
-          path: x6100/AetherX6100Buildroot/build
+          path: buildroot.tar.gz
       - working-directory: x6100/x6100_gui
         name: Compile GUI
         run: |
