@@ -10,7 +10,7 @@ jobs:
       - name: Checkout Buildroot
         uses: actions/checkout@v4
         with:
-          repository: gdyuldin/AetherX6100Buildroot
+          repository: infrat/AetherX6100Buildroot
           path: x6100/AetherX6100Buildroot
       - name: Checkout GUI
         uses: actions/checkout@v4
